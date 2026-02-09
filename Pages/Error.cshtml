@@ -1,0 +1,42 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="portal-card">
+            @if (Model.Code == 404)
+            {
+                <div class="section-title" style="font-size:28px;">404 — Page Not Found</div>
+                <div class="subtext">The page you requested cannot be found.</div>
+            }
+            else if (Model.Code == 403)
+            {
+                <div class="section-title" style="font-size:28px;">403 — Access Denied</div>
+                <div class="subtext">You do not have permission to access this page.</div>
+            }
+            else if (Model.Code == 500)
+            {
+                <div class="section-title" style="font-size:28px;">500 — Server Error</div>
+                <div class="subtext">Something went wrong. Please try again later.</div>
+            }
+            else
+            {
+                <div class="section-title" style="font-size:28px;">Error — @Model.Code</div>
+                <div class="subtext">An unexpected error occurred.</div>
+            }
+
+            <div class="mt-4 d-flex gap-2">
+                <a class="btn btn-primary" asp-page="/Index">Go to Homepage</a>
+                <a class="btn btn-outline-light" asp-page="/Login">Login</a>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.TraceId))
+            {
+                <div class="subtext mt-3"><b>Reference ID:</b> @Model.TraceId</div>
+            }
+        </div>
+    </div>
+</div>

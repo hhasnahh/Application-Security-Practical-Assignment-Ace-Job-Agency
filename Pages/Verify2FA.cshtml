@@ -1,0 +1,35 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.Verify2FAModel
+@{
+    ViewData["Title"] = "Verify 2FA";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="portal-card">
+            <div class="section-title" style="font-size:28px;">Two-Factor Verification</div>
+            <div class="subtext">Enter the OTP sent to your email. (Demo: check Output window)</div>
+
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Email" />
+
+                <div class="mb-3">
+                    <label asp-for="Code" class="form-label">OTP Code</label>
+                    <input asp-for="Code" class="form-control" placeholder="6-digit code" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">Verify</button>
+                <div class="text-center mt-3">
+                    <a asp-page="/Login">Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

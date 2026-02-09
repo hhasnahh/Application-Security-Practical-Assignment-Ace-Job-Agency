@@ -1,0 +1,153 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.RegisterModel
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Register";
+    var siteKey = Configuration["Recaptcha:SiteKey"] ?? "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="portal-card">
+            <div class="section-title" style="font-size:30px;">Create Member Account</div>
+            <div class="subtext">Join Ace Job Agency to access member-only services and job matching.</div>
+
+            <form method="post" enctype="multipart/form-data" novalidate>
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RModel.FirstName" class="form-label"></label>
+                        <input asp-for="RModel.FirstName" class="form-control" />
+                        <span asp-validation-for="RModel.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RModel.LastName" class="form-label"></label>
+                        <input asp-for="RModel.LastName" class="form-control" />
+                        <span asp-validation-for="RModel.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RModel.Gender" class="form-label"></label>
+                        <select asp-for="RModel.Gender" class="form-select">
+                            <option value="">Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                        <span asp-validation-for="RModel.Gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RModel.Dob" class="form-label">Date of Birth</label>
+                        <input asp-for="RModel.Dob" type="date" class="form-control" max="@DateTime.Today.AddYears(-16).ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="RModel.Dob" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RModel.Nric" class="form-label"></label>
+                    <input asp-for="RModel.Nric" class="form-control" placeholder="S1234567D" />
+                    <span asp-validation-for="RModel.Nric" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RModel.Resume" class="form-label">Resume (.pdf/.docx only)</label>
+                    <input asp-for="RModel.Resume" type="file" class="form-control" accept=".pdf,.docx" />
+                    <span asp-validation-for="RModel.Resume" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="RModel.Photo" class="form-label">Profile Photo (.jpg)</label>
+                    <input asp-for="RModel.Photo" type="file" class="form-control" accept=".jpg, image/jpeg" />
+                    <span asp-validation-for="RModel.Photo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RModel.WhoAmI" class="form-label"></label>
+                    <textarea asp-for="RModel.WhoAmI" class="form-control" rows="3" placeholder="Tell us about yourself"></textarea>
+                    <span asp-validation-for="RModel.WhoAmI" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RModel.Email" class="form-label"></label>
+                    <input asp-for="RModel.Email" class="form-control" placeholder="name@domain.com" />
+                    <span asp-validation-for="RModel.Email" class="text-danger"></span>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-2">
+                    <label asp-for="RModel.Password" class="form-label"></label>
+
+                    <div class="pw-wrap">
+                        <input id="pw" asp-for="RModel.Password" type="password" class="form-control" />
+                        <button type="button" class="pw-toggle" onclick="togglePw('pw', this)">🙈</button>
+                    </div>
+
+                    <!-- Live rules -->
+                    <ul class="pw-rules" style="margin-top:10px;">
+                        <li id="rLen">❌ Min 12 characters</li>
+                        <li id="rUp">❌ Uppercase letter</li>
+                        <li id="rLow">❌ Lowercase letter</li>
+                        <li id="rNum">❌ Number</li>
+                        <li id="rSym">❌ Symbol</li>
+                    </ul>
+
+                    <!-- Generator + Copy -->
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button"
+                                class="btn btn-outline-light btn-sm"
+                                data-pwgen data-target="pw" data-confirm="regPw2">
+                            Generate strong password
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-outline-light btn-sm"
+                                data-pwcopy data-target="pw">
+                            Copy
+                        </button>
+                    </div>
+
+                    <span asp-validation-for="RModel.Password" class="text-danger"></span>
+                </div>
+
+                <!-- CONFIRM PASSWORD -->
+                <div class="mb-4">
+                    <label asp-for="RModel.ConfirmPassword" class="form-label"></label>
+                    <div class="pw-wrap">
+                        <input id="regPw2" asp-for="RModel.ConfirmPassword" type="password" class="form-control" />
+                        <button type="button" class="pw-toggle" onclick="togglePw('regPw2', this)">🙈</button>
+                    </div>
+                    <span asp-validation-for="RModel.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <!-- reCAPTCHA token -->
+                <input type="hidden" asp-for="RModel.RecaptchaToken" id="recaptchaTokenReg" />
+
+                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+
+                <div class="text-center mt-3">
+                    <span class="subtext">Already have an account?</span>
+                    <a asp-page="/Login">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@siteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@siteKey', { action: 'register' })
+                .then(function (token) {
+                    document.getElementById("recaptchaTokenReg").value = token;
+                });
+        });
+    </script>
+}

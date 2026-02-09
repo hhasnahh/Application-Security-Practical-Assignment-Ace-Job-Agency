@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AceJobAgencyPortal.Model
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body class="app-body">
+    <header class="topbar">
+        <div class="container d-flex align-items-center justify-content-between py-3">
+            <a class="brand" asp-page="/Index">
+                <span class="brand-dot"></span>
+                <span class="brand-text">Ace Job Agency</span> <span class="brand-sub">Member Portal</span>
+            </a>
+
+            <nav class="nav-links d-flex align-items-center gap-2">
+                <a class="nav-pill" asp-page="/Index">Home</a>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="nav-pill" asp-page="/ChangePhoto">Change Photo</a>
+                    <a class="nav-pill" asp-page="/ChangePassword">Change Password</a>
+                    <a class="nav-pill" asp-page="/Admin">Admin</a>
+                    <a class="nav-pill danger" asp-page="/Logout">Logout</a>
+                }
+                else
+                {
+                    <a class="nav-pill" asp-page="/Login">Login</a>
+                    <a class="nav-pill" asp-page="/Register">Register</a>
+                }
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrap">
+        <div class="container py-4">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer-lite">
+        <div class="container py-3 small">
+            <span>© @DateTime.Now.Year Ace Job Agency • Membership Service Portal</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

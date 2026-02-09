@@ -1,0 +1,32 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.ChangePhotoModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="portal-card">
+            <div class="section-title" style="font-size:28px;">Update Profile Photo</div>
+            <div class="subtext">Only .jpg/.jpeg/.png allowed (max 2MB).</div>
+
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Upload new photo</label>
+                    <input asp-for="Photo" type="file" class="form-control" accept=".jpg,.jpeg,.png,image/*" />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">Save Photo</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a asp-page="/Index">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

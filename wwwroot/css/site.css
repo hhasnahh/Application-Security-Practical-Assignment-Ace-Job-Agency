@@ -1,0 +1,198 @@
+:root {
+    --bg: #0f1116;
+    --card: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.10);
+    --text: #e8e9ee;
+    --muted: rgba(232,233,238,0.78);
+    --accent: #b9a6ff; /* pastel purple */
+    --accent2: #8b7cff; /* deeper pastel purple */
+    --danger: #ff6b8a;
+}
+
+.app-body {
+    background: radial-gradient(900px 520px at 15% 10%, rgba(185,166,255,0.22), transparent), radial-gradient(900px 520px at 85% 30%, rgba(160,160,175,0.18), transparent), var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(15,17,22,0.6);
+    backdrop-filter: blur(10px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.brand-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    box-shadow: 0 0 18px rgba(185,166,255,0.5);
+}
+
+.brand-text {
+    color: var(--text);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.nav-pill {
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+    padding: 8px 12px;
+    border-radius: 999px;
+    transition: 0.15s ease;
+}
+
+    .nav-pill:hover {
+        border-color: rgba(185,166,255,0.45);
+        background: rgba(185,166,255,0.14);
+        transform: translateY(-1px);
+    }
+
+    .nav-pill.danger:hover {
+        border-color: rgba(255,107,138,0.55);
+        background: rgba(255,107,138,0.14);
+    }
+
+.main-wrap {
+    flex: 1;
+}
+
+.footer-lite {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted);
+    background: rgba(15,17,22,0.55);
+}
+
+/* Card */
+.portal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+.section-title {
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.subtext {
+    color: var(--muted);
+    margin-bottom: 18px;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border: none;
+}
+
+.btn-primary:hover {
+     filter: brightness(1.05);
+}
+
+/* Inputs */
+.form-control, .form-select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: rgba(185,166,255,0.6);
+    box-shadow: 0 0 0 .2rem rgba(185,166,255,0.18);
+}
+
+.form-select option {
+    background: #2b2f36; /* grey */
+    color: #e8e9ee;
+}
+
+/* Password toggle wrapper */
+.pw-wrap {
+    position: relative;
+}
+
+    .pw-wrap .form-control {
+        padding-right: 52px;
+    }
+
+.pw-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 34px;
+    width: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(185,166,255,0.35);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    cursor: pointer;
+}
+
+    .pw-toggle:hover {
+        background: rgba(185,166,255,0.16);
+    }
+
+/* Small helper list */
+.pw-rules {
+    color: var(--muted);
+    margin: 10px 0 0;
+    padding-left: 18px;
+    font-size: 0.92rem;
+}
+.btn-outline-light {
+    border-color: rgba(185,166,255,0.35);
+}
+
+.btn-outline-light:hover {
+     background: rgba(185,166,255,0.16);
+     border-color: rgba(185,166,255,0.55);
+}
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .avatar .avatar-initials {
+        position: absolute;
+        font-weight: 700;
+        opacity: .9;
+        display: none;
+    }
+
+    .avatar.avatar-fallback .avatar-initials {
+        display: block;
+    }

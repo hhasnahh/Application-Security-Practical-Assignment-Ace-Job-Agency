@@ -1,0 +1,11 @@
+﻿@page
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+<div class="portal-card">
+    <div class="section-title" style="font-size:28px;">Admin Dashboard</div>
+    <div class="subtext">Only users with the Admin role can access this page.</div>
+
+    <p class="subtext mt-3">
+        Try logging in as a normal member and visiting <b>/Admin</b> to trigger a 403.
+    </p>
+</div>

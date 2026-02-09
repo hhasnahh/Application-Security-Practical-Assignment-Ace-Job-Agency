@@ -1,0 +1,118 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@if (User?.Identity?.IsAuthenticated != true)
+{
+    <div class="portal-card" style="max-width:900px;margin:40px auto;">
+        <div class="section-title" style="font-size:30px;">Welcome to Ace Job Agency</div>
+        <div class="subtext">
+            Sign in to access your member portal, upload your resume, and manage your profile securely.
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" asp-page="/Login">Login</a>
+            <a class="btn btn-outline-light" asp-page="/Register">Register</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="portal-card" style="max-width:1000px;margin:35px auto;">
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+            <div style="width:70px;height:70px;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.25);">
+                <img src="/Index?handler=Photo"
+                     alt="Profile photo"
+                     style="width:100%;height:100%;object-fit:cover;"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;display:flex;align-items:center;justify-content:center;height:100%;color:#bbb;font-weight:600;&quot;>AJ</div>';" />
+            </div>
+
+            <div style="flex:1;min-width:220px;">
+                <div class="section-title" style="font-size:30px;margin-bottom:4px;">
+                    Welcome back!
+                </div>
+                <div class="subtext">
+                    You’re signed in to the <b>Member Portal</b>. Below are your saved profile details.
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <a class="btn btn-primary" asp-page="/ChangePassword">Change Password</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width:1000px;margin:0 auto;">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;">
+            <!-- Card: Email -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">Email</div>
+                <div style="font-size:18px;margin-top:6px;">@Model.Email</div>
+            </div>
+
+            <!-- Card: Name -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">Full Name</div>
+                <div style="font-size:18px;margin-top:6px;">
+                    @(Model.Profile?.FirstName ?? "") @(Model.Profile?.LastName ?? "")
+                </div>
+            </div>
+
+            <!-- Card: Gender -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">Gender</div>
+                <div style="font-size:18px;margin-top:6px;">@Model.Profile?.Gender</div>
+            </div>
+
+            <!-- Card: DOB -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">Date of Birth</div>
+                <div style="font-size:18px;margin-top:6px;">
+                    @Model.Profile?.Dob.ToString("yyyy-MM-dd")
+                </div>
+            </div>
+
+            <!-- Card: NRIC -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">NRIC (decrypted)</div>
+                <div style="font-size:18px;margin-top:6px;">@Model.NricPlain</div>
+            </div>
+
+            <!-- Card: Resume -->
+            <div class="portal-card" style="padding:18px;">
+                <div style="font-weight:700;opacity:.9;">Resume</div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Profile?.ResumeStoredPath))
+                {
+                    <div style="margin-top:8px;">
+                        <a class="btn btn-outline-light"
+                           href="/Index?handler=Resume"
+                           target="_blank">
+                            View / Download Resume
+                        </a>
+
+                        <div class="subtext" style="margin-top:8px;">
+                            File: <span style="opacity:.85;">@Model.Profile?.ResumeOriginalFileName</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="subtext" style="margin-top:8px;">
+                        No resume uploaded yet.
+                    </div>
+                }
+            </div>
+
+            <!-- Card: About Me -->
+            <div class="portal-card" style="padding:18px; grid-column:1 / -1;">
+                <div style="font-weight:700;opacity:.9;">About Me</div>
+                <div style="font-size:16px;margin-top:8px;white-space:pre-wrap;">
+                    @Model.Profile?.WhoAmI
+                </div>
+            </div>
+        </div>
+    </div>
+}

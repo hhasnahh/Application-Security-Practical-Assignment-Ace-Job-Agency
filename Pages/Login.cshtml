@@ -1,0 +1,64 @@
+﻿@page
+@model AceJobAgencyPortal.Pages.LoginModel
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Login";
+    var siteKey = Configuration["Recaptcha:SiteKey"] ?? "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="portal-card">
+            <div class="section-title" style="font-size:30px;">Member Login</div>
+            <div class="subtext">Secure Access to Ace Job Agency Member Services.</div>
+
+            <form method="post" novalidate>
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="name@domain.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Password">Password</label>
+
+                    <div class="pw-wrap">
+                        <input id="loginPw" asp-for="Password" type="password" class="form-control" />
+                        <button type="button" class="pw-toggle" onclick="togglePw('loginPw', this)">🙈</button>
+                    </div>
+
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <input type="hidden" asp-for="RecaptchaToken" id="recaptchaTokenLogin" />
+
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-page="/ForgotPassword">Forgot Password?</a>
+                    <a asp-page="/Register">Create account</a>
+                </div>
+
+                <div class="subtext mt-3">
+                    Note: 2FA OTP may be required after login (shown in Output window for demo).
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@siteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@siteKey', { action: 'login' })
+                .then(function (token) {
+                    document.getElementById("recaptchaTokenLogin").value = token;
+                });
+        });
+    </script>
+}
