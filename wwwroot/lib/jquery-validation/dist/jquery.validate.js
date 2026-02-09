@@ -684,6 +684,31 @@ $.extend( $.validator, {
 		},
 
 		clean: function( selector ) {
+
+			// Normalize different input types to a single DOM element.
+			// - If a jQuery object or array-like is passed, use its first element.
+			// - If a DOM element is passed, return it directly.
+			// - If a string is passed, interpret it as a selector within the current form,
+			//   instead of passing it directly to `$()` where it could be treated as HTML.
+			if ( !selector ) {
+				return selector;
+			}
+
+			// jQuery object or array-like
+			if ( selector.jquery || selector.length ) {
+				return selector[ 0 ];
+			}
+
+			// DOM element
+			if ( selector.nodeType === 1 || selector.nodeType === 9 ) {
+				return selector;
+			}
+
+			// Fallback for string selectors: search within the current form
+			if ( typeof selector === "string" ) {
+				return $( this.currentForm ).find( selector )[ 0 ];
+			}
+
 			return $( selector )[ 0 ];
 		},
 
@@ -1062,6 +1087,20 @@ $.extend( $.validator, {
 		},
 
 		validationTargetFor: function( element ) {
+
+			if ( !element ) {
+				return element;
+			}
+
+			// Normalize jQuery objects to a single DOM element
+			if ( element.jquery || element.length ) {
+				element = element[ 0 ];
+			}
+
+			// If a string is provided, attempt to resolve it by name within the current form
+			if ( typeof element === "string" ) {
+				element = this.findByName( element )[ 0 ];
+			}
 
 			// If radio/checkbox, validate first element in group instead
 			if ( this.checkable( element ) ) {
